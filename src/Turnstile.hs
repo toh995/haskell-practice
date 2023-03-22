@@ -1,7 +1,5 @@
 module Turnstile where
 
-import Data.List
-
 data TurnstileState = Locked | Unlocked
   deriving (Eq, Show)
 

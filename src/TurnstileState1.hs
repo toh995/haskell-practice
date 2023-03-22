@@ -1,6 +1,5 @@
 module TurnstileState1 where
 
-import Control.Monad
 import Data.Functor
 
 import State
@@ -81,10 +80,10 @@ testTurnstile = do
 
   -- test coinS
   put Locked
-  coinS
+  _ <- coinS
   check3 <- get
   put Unlocked
-  coinS
+  _ <- coinS
   check4 <- get
 
   -- reset original state

@@ -2,7 +2,6 @@ module TurnstileState2 where
 
 import Control.Monad
 import Data.Functor
-import Data.List
 
 import State
 import Turnstile
