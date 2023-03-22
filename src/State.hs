@@ -1,20 +1,29 @@
 module State where
 
-import Control.Monad
-
 newtype State s a = State { runState :: s -> (a, s) }
 
 state :: (s -> (a, s)) -> State s a
 state = State
 
 instance Functor (State s) where
-  fmap = liftM
+  fmap :: (a -> b) -> State s a -> State s b
+  fmap f stateA = 
+    State $
+      \s0 ->
+        let (a, s1) = runState stateA s0
+         in (f a, s1)
 
 instance Applicative (State s) where
   pure :: a -> State s a
   pure x = State (x,)
 
-  (<*>) = ap
+  (<*>) :: State s (a -> b) -> State s a -> State s b
+  (<*>) stateF stateA =
+    State $
+      \s0 ->
+        let (f, s1) = runState stateF s0
+            (a, s2) = runState stateA s1
+         in (f a, s2)
 
 instance Monad (State s) where
   (>>=) :: State s a -> (a -> State s b) -> State s b
